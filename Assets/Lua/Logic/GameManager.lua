@@ -47,7 +47,7 @@ function GameManager.OnInitOK()
 	Facade.SendNotification(NotifyName.InitCameraHandler);				--初始化相机
 	-- this.ConnectSvr();													--连接服务器
 	log('开始显示主面板');
-	Facade.SendNotification(NotifyName.ShowUI, LoginView);				--显示登录
+	Facade.SendNotification(NotifyName.ShowUI, StartView);				--显示登录
 	log('显示主面板调用完成');
 end
 
