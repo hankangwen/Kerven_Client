@@ -30,7 +30,7 @@ public class CmdStartUp : SimpleCommand
     {
         Singleton.GetInstance<PoolManager>();
         Singleton.GetInstance<TipsManager>();
-        Singleton.GetInstance<UIManager>().ShowUI2(DownloadView.Name);//打开解包下载界面
+        // Singleton.GetInstance<UIManager>().ShowUI2(DownloadView.Name);//打开解包下载界面
         Singleton.GetInstance<ResourceManager>();
         Singleton.GetInstance<DownloadManager>();
         Singleton.GetInstance<LuaManager>();

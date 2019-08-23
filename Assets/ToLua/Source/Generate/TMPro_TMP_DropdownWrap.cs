@@ -7,6 +7,7 @@ public class TMPro_TMP_DropdownWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(TMPro.TMP_Dropdown), typeof(UnityEngine.UI.Selectable));
+		L.RegFunction("SetValueWithoutNotify", SetValueWithoutNotify);
 		L.RegFunction("RefreshShownValue", RefreshShownValue);
 		L.RegFunction("AddOptions", AddOptions);
 		L.RegFunction("ClearOptions", ClearOptions);
@@ -27,6 +28,23 @@ public class TMPro_TMP_DropdownWrap
 		L.RegVar("value", get_value, set_value);
 		L.RegVar("IsExpanded", get_IsExpanded, null);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetValueWithoutNotify(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			TMPro.TMP_Dropdown obj = (TMPro.TMP_Dropdown)ToLua.CheckObject<TMPro.TMP_Dropdown>(L, 1);
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.SetValueWithoutNotify(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]

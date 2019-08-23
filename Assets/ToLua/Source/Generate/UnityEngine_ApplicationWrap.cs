@@ -54,6 +54,7 @@ public class UnityEngine_ApplicationWrap
 		L.RegVar("logMessageReceived", get_logMessageReceived, set_logMessageReceived);
 		L.RegVar("logMessageReceivedThreaded", get_logMessageReceivedThreaded, set_logMessageReceivedThreaded);
 		L.RegVar("onBeforeRender", get_onBeforeRender, set_onBeforeRender);
+		L.RegVar("focusChanged", get_focusChanged, set_focusChanged);
 		L.RegVar("wantsToQuit", get_wantsToQuit, set_wantsToQuit);
 		L.RegVar("quitting", get_quitting, set_quitting);
 		L.RegFunction("AdvertisingIdentifierCallback", UnityEngine_Application_AdvertisingIdentifierCallback);
@@ -753,6 +754,13 @@ public class UnityEngine_ApplicationWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_focusChanged(IntPtr L)
+	{
+		ToLua.Push(L, new EventObject(typeof(System.Action<bool>)));
+		return 1;
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_wantsToQuit(IntPtr L)
 	{
 		ToLua.Push(L, new EventObject(typeof(System.Func<bool>)));
@@ -941,6 +949,41 @@ public class UnityEngine_ApplicationWrap
 			{
 				UnityEngine.Events.UnityAction ev = (UnityEngine.Events.UnityAction)arg0.func;
 				UnityEngine.Application.onBeforeRender -= ev;
+			}
+
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_focusChanged(IntPtr L)
+	{
+		try
+		{
+			EventObject arg0 = null;
+
+			if (LuaDLL.lua_isuserdata(L, 2) != 0)
+			{
+				arg0 = (EventObject)ToLua.ToObject(L, 2);
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "The event 'UnityEngine.Application.focusChanged' can only appear on the left hand side of += or -= when used outside of the type 'UnityEngine.Application'");
+			}
+
+			if (arg0.op == EventOp.Add)
+			{
+				System.Action<bool> ev = (System.Action<bool>)arg0.func;
+				UnityEngine.Application.focusChanged += ev;
+			}
+			else if (arg0.op == EventOp.Sub)
+			{
+				System.Action<bool> ev = (System.Action<bool>)arg0.func;
+				UnityEngine.Application.focusChanged -= ev;
 			}
 
 			return 0;

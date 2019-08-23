@@ -60,6 +60,7 @@ public class DelegateFactory
 		dict.Add(typeof(UnityEngine.Application.AdvertisingIdentifierCallback), factory.UnityEngine_Application_AdvertisingIdentifierCallback);
 		dict.Add(typeof(UnityEngine.Application.LowMemoryCallback), factory.UnityEngine_Application_LowMemoryCallback);
 		dict.Add(typeof(UnityEngine.Application.LogCallback), factory.UnityEngine_Application_LogCallback);
+		dict.Add(typeof(System.Action<bool>), factory.System_Action_bool);
 		dict.Add(typeof(System.Func<bool>), factory.System_Func_bool);
 		dict.Add(typeof(System.Action<string,System.Action<UnityEngine.U2D.SpriteAtlas>>), factory.System_Action_string_System_Action_UnityEngine_U2D_SpriteAtlas);
 		dict.Add(typeof(System.Action<UnityEngine.U2D.SpriteAtlas>), factory.System_Action_UnityEngine_U2D_SpriteAtlas);
@@ -113,6 +114,7 @@ public class DelegateFactory
 		DelegateTraits<UnityEngine.Application.AdvertisingIdentifierCallback>.Init(factory.UnityEngine_Application_AdvertisingIdentifierCallback);
 		DelegateTraits<UnityEngine.Application.LowMemoryCallback>.Init(factory.UnityEngine_Application_LowMemoryCallback);
 		DelegateTraits<UnityEngine.Application.LogCallback>.Init(factory.UnityEngine_Application_LogCallback);
+		DelegateTraits<System.Action<bool>>.Init(factory.System_Action_bool);
 		DelegateTraits<System.Func<bool>>.Init(factory.System_Func_bool);
 		DelegateTraits<System.Action<string,System.Action<UnityEngine.U2D.SpriteAtlas>>>.Init(factory.System_Action_string_System_Action_UnityEngine_U2D_SpriteAtlas);
 		DelegateTraits<System.Action<UnityEngine.U2D.SpriteAtlas>>.Init(factory.System_Action_UnityEngine_U2D_SpriteAtlas);
@@ -166,6 +168,7 @@ public class DelegateFactory
 		TypeTraits<UnityEngine.Application.AdvertisingIdentifierCallback>.Init(factory.Check_UnityEngine_Application_AdvertisingIdentifierCallback);
 		TypeTraits<UnityEngine.Application.LowMemoryCallback>.Init(factory.Check_UnityEngine_Application_LowMemoryCallback);
 		TypeTraits<UnityEngine.Application.LogCallback>.Init(factory.Check_UnityEngine_Application_LogCallback);
+		TypeTraits<System.Action<bool>>.Init(factory.Check_System_Action_bool);
 		TypeTraits<System.Func<bool>>.Init(factory.Check_System_Func_bool);
 		TypeTraits<System.Action<string,System.Action<UnityEngine.U2D.SpriteAtlas>>>.Init(factory.Check_System_Action_string_System_Action_UnityEngine_U2D_SpriteAtlas);
 		TypeTraits<System.Action<UnityEngine.U2D.SpriteAtlas>>.Init(factory.Check_System_Action_UnityEngine_U2D_SpriteAtlas);
@@ -219,6 +222,7 @@ public class DelegateFactory
 		StackTraits<UnityEngine.Application.AdvertisingIdentifierCallback>.Push = factory.Push_UnityEngine_Application_AdvertisingIdentifierCallback;
 		StackTraits<UnityEngine.Application.LowMemoryCallback>.Push = factory.Push_UnityEngine_Application_LowMemoryCallback;
 		StackTraits<UnityEngine.Application.LogCallback>.Push = factory.Push_UnityEngine_Application_LogCallback;
+		StackTraits<System.Action<bool>>.Push = factory.Push_System_Action_bool;
 		StackTraits<System.Func<bool>>.Push = factory.Push_System_Func_bool;
 		StackTraits<System.Action<string,System.Action<UnityEngine.U2D.SpriteAtlas>>>.Push = factory.Push_System_Action_string_System_Action_UnityEngine_U2D_SpriteAtlas;
 		StackTraits<System.Action<UnityEngine.U2D.SpriteAtlas>>.Push = factory.Push_System_Action_UnityEngine_U2D_SpriteAtlas;
@@ -2820,6 +2824,63 @@ public class DelegateFactory
 	}
 
 	void Push_UnityEngine_Application_LogCallback(IntPtr L, UnityEngine.Application.LogCallback o)
+	{
+		ToLua.Push(L, o);
+	}
+
+	class System_Action_bool_Event : LuaDelegate
+	{
+		public System_Action_bool_Event(LuaFunction func) : base(func) { }
+		public System_Action_bool_Event(LuaFunction func, LuaTable self) : base(func, self) { }
+
+		public void Call(bool param0)
+		{
+			func.BeginPCall();
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+
+		public void CallWithSelf(bool param0)
+		{
+			func.BeginPCall();
+			func.Push(self);
+			func.Push(param0);
+			func.PCall();
+			func.EndPCall();
+		}
+	}
+
+	public System.Action<bool> System_Action_bool(LuaFunction func, LuaTable self, bool flag)
+	{
+		if (func == null)
+		{
+			System.Action<bool> fn = delegate(bool param0) { };
+			return fn;
+		}
+
+		if(!flag)
+		{
+			System_Action_bool_Event target = new System_Action_bool_Event(func);
+			System.Action<bool> d = target.Call;
+			target.method = d.Method;
+			return d;
+		}
+		else
+		{
+			System_Action_bool_Event target = new System_Action_bool_Event(func, self);
+			System.Action<bool> d = target.CallWithSelf;
+			target.method = d.Method;
+			return d;
+		}
+	}
+
+	bool Check_System_Action_bool(IntPtr L, int pos)
+	{
+		return TypeChecker.CheckDelegateType(typeof(System.Action<bool>), L, pos);
+	}
+
+	void Push_System_Action_bool(IntPtr L, System.Action<bool> o)
 	{
 		ToLua.Push(L, o);
 	}

@@ -45,8 +45,10 @@ function GameManager.OnInitOK()
 	TipsManager:OnInit();												--初始化Tips
 	SpriteAtlasManager.atlasRequested = SpriteAtlasManager.atlasRequested + this.SetAtlas;
 	Facade.SendNotification(NotifyName.InitCameraHandler);				--初始化相机
-	this.ConnectSvr();													--连接服务器
-	log('Framework InitOK--->>>');
+	-- this.ConnectSvr();													--连接服务器
+	log('开始显示主面板');
+	Facade.SendNotification(NotifyName.ShowUI, LoginView);				--显示登录
+	log('显示主面板调用完成');
 end
 
 --显示登陆界面并连接服务器

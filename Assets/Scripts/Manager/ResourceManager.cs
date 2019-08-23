@@ -154,7 +154,7 @@ namespace Framework
                 if (bundleInfo == null)
                 {
                     m_LoadRequests.Remove(abName);
-                    Debug.LogError("OnLoadAsset--->>>" + abName);
+                    Debug.Log("OnLoadAsset--->>>" + abName);
                     yield break;
                 }
             }
@@ -203,7 +203,7 @@ namespace Framework
         {
             string url = BaseDownloadingURL + abName;
 
-            Util.LogWarning(url);
+            // Util.LogWarning(url);
             UnityWebRequest download = null;
             if (type == typeof(AssetBundleManifest))
             {

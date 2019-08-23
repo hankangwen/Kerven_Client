@@ -80,6 +80,7 @@ public class TMPro_TMP_TextWrap
 		L.RegVar("mappingUvLineOffset", get_mappingUvLineOffset, set_mappingUvLineOffset);
 		L.RegVar("renderMode", get_renderMode, set_renderMode);
 		L.RegVar("geometrySortingOrder", get_geometrySortingOrder, set_geometrySortingOrder);
+		L.RegVar("vertexBufferAutoSizeReduction", get_vertexBufferAutoSizeReduction, set_vertexBufferAutoSizeReduction);
 		L.RegVar("firstVisibleCharacter", get_firstVisibleCharacter, set_firstVisibleCharacter);
 		L.RegVar("maxVisibleCharacters", get_maxVisibleCharacters, set_maxVisibleCharacters);
 		L.RegVar("maxVisibleWords", get_maxVisibleWords, set_maxVisibleWords);
@@ -966,8 +967,8 @@ public class TMPro_TMP_TextWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			TMPro.TMP_Text obj = (TMPro.TMP_Text)o;
-			int ret = obj.fontWeight;
-			LuaDLL.lua_pushinteger(L, ret);
+			TMPro.FontWeight ret = obj.fontWeight;
+			ToLua.Push(L, ret);
 			return 1;
 		}
 		catch(Exception e)
@@ -1638,6 +1639,25 @@ public class TMPro_TMP_TextWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index geometrySortingOrder on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_vertexBufferAutoSizeReduction(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			TMPro.TMP_Text obj = (TMPro.TMP_Text)o;
+			bool ret = obj.vertexBufferAutoSizeReduction;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index vertexBufferAutoSizeReduction on a nil value");
 		}
 	}
 
@@ -2543,7 +2563,7 @@ public class TMPro_TMP_TextWrap
 		{
 			o = ToLua.ToObject(L, 1);
 			TMPro.TMP_Text obj = (TMPro.TMP_Text)o;
-			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			TMPro.FontWeight arg0 = (TMPro.FontWeight)ToLua.CheckObject(L, 2, typeof(TMPro.FontWeight));
 			obj.fontWeight = arg0;
 			return 0;
 		}
@@ -3120,6 +3140,25 @@ public class TMPro_TMP_TextWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index geometrySortingOrder on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_vertexBufferAutoSizeReduction(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			TMPro.TMP_Text obj = (TMPro.TMP_Text)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.vertexBufferAutoSizeReduction = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index vertexBufferAutoSizeReduction on a nil value");
 		}
 	}
 

@@ -7,6 +7,7 @@ public class TMPro_TMP_InputFieldWrap
 	public static void Register(LuaState L)
 	{
 		L.BeginClass(typeof(TMPro.TMP_InputField), typeof(UnityEngine.UI.Selectable));
+		L.RegFunction("SetTextWithoutNotify", SetTextWithoutNotify);
 		L.RegFunction("MoveTextEnd", MoveTextEnd);
 		L.RegFunction("MoveTextStart", MoveTextStart);
 		L.RegFunction("MoveToEndOfLine", MoveToEndOfLine);
@@ -26,14 +27,18 @@ public class TMPro_TMP_InputFieldWrap
 		L.RegFunction("OnSelect", OnSelect);
 		L.RegFunction("OnPointerClick", OnPointerClick);
 		L.RegFunction("OnControlClick", OnControlClick);
+		L.RegFunction("ReleaseSelection", ReleaseSelection);
 		L.RegFunction("DeactivateInputField", DeactivateInputField);
 		L.RegFunction("OnDeselect", OnDeselect);
 		L.RegFunction("OnSubmit", OnSubmit);
+		L.RegFunction("CalculateLayoutInputHorizontal", CalculateLayoutInputHorizontal);
+		L.RegFunction("CalculateLayoutInputVertical", CalculateLayoutInputVertical);
 		L.RegFunction("SetGlobalPointSize", SetGlobalPointSize);
 		L.RegFunction("SetGlobalFontAsset", SetGlobalFontAsset);
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("shouldHideMobileInput", get_shouldHideMobileInput, set_shouldHideMobileInput);
+		L.RegVar("shouldHideSoftKeyboard", get_shouldHideSoftKeyboard, set_shouldHideSoftKeyboard);
 		L.RegVar("text", get_text, set_text);
 		L.RegVar("isFocused", get_isFocused, null);
 		L.RegVar("caretBlinkRate", get_caretBlinkRate, set_caretBlinkRate);
@@ -53,6 +58,7 @@ public class TMPro_TMP_InputFieldWrap
 		L.RegVar("onTextSelection", get_onTextSelection, set_onTextSelection);
 		L.RegVar("onEndTextSelection", get_onEndTextSelection, set_onEndTextSelection);
 		L.RegVar("onValueChanged", get_onValueChanged, set_onValueChanged);
+		L.RegVar("onTouchScreenKeyboardStatusChanged", get_onTouchScreenKeyboardStatusChanged, set_onTouchScreenKeyboardStatusChanged);
 		L.RegVar("onValidateInput", get_onValidateInput, set_onValidateInput);
 		L.RegVar("characterLimit", get_characterLimit, set_characterLimit);
 		L.RegVar("pointSize", get_pointSize, set_pointSize);
@@ -63,6 +69,7 @@ public class TMPro_TMP_InputFieldWrap
 		L.RegVar("isRichTextEditingAllowed", get_isRichTextEditingAllowed, set_isRichTextEditingAllowed);
 		L.RegVar("contentType", get_contentType, set_contentType);
 		L.RegVar("lineType", get_lineType, set_lineType);
+		L.RegVar("lineLimit", get_lineLimit, set_lineLimit);
 		L.RegVar("inputType", get_inputType, set_inputType);
 		L.RegVar("keyboardType", get_keyboardType, set_keyboardType);
 		L.RegVar("characterValidation", get_characterValidation, set_characterValidation);
@@ -78,8 +85,32 @@ public class TMPro_TMP_InputFieldWrap
 		L.RegVar("stringPosition", get_stringPosition, set_stringPosition);
 		L.RegVar("selectionStringAnchorPosition", get_selectionStringAnchorPosition, set_selectionStringAnchorPosition);
 		L.RegVar("selectionStringFocusPosition", get_selectionStringFocusPosition, set_selectionStringFocusPosition);
+		L.RegVar("minWidth", get_minWidth, null);
+		L.RegVar("preferredWidth", get_preferredWidth, null);
+		L.RegVar("flexibleWidth", get_flexibleWidth, null);
+		L.RegVar("minHeight", get_minHeight, null);
+		L.RegVar("preferredHeight", get_preferredHeight, null);
+		L.RegVar("flexibleHeight", get_flexibleHeight, null);
+		L.RegVar("layoutPriority", get_layoutPriority, null);
 		L.RegFunction("OnValidateInput", TMPro_TMP_InputField_OnValidateInput);
 		L.EndClass();
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int SetTextWithoutNotify(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 2);
+			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)ToLua.CheckObject<TMPro.TMP_InputField>(L, 1);
+			string arg0 = ToLua.CheckString(L, 2);
+			obj.SetTextWithoutNotify(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
@@ -403,14 +434,45 @@ public class TMPro_TMP_InputFieldWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int DeactivateInputField(IntPtr L)
+	static int ReleaseSelection(IntPtr L)
 	{
 		try
 		{
 			ToLua.CheckArgsCount(L, 1);
 			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)ToLua.CheckObject<TMPro.TMP_InputField>(L, 1);
-			obj.DeactivateInputField();
+			obj.ReleaseSelection();
 			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int DeactivateInputField(IntPtr L)
+	{
+		try
+		{
+			int count = LuaDLL.lua_gettop(L);
+
+			if (count == 1)
+			{
+				TMPro.TMP_InputField obj = (TMPro.TMP_InputField)ToLua.CheckObject<TMPro.TMP_InputField>(L, 1);
+				obj.DeactivateInputField();
+				return 0;
+			}
+			else if (count == 2)
+			{
+				TMPro.TMP_InputField obj = (TMPro.TMP_InputField)ToLua.CheckObject<TMPro.TMP_InputField>(L, 1);
+				bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+				obj.DeactivateInputField(arg0);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: TMPro.TMP_InputField.DeactivateInputField");
+			}
 		}
 		catch (Exception e)
 		{
@@ -444,6 +506,38 @@ public class TMPro_TMP_InputFieldWrap
 			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)ToLua.CheckObject<TMPro.TMP_InputField>(L, 1);
 			UnityEngine.EventSystems.BaseEventData arg0 = (UnityEngine.EventSystems.BaseEventData)ToLua.CheckObject<UnityEngine.EventSystems.BaseEventData>(L, 2);
 			obj.OnSubmit(arg0);
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CalculateLayoutInputHorizontal(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)ToLua.CheckObject<TMPro.TMP_InputField>(L, 1);
+			obj.CalculateLayoutInputHorizontal();
+			return 0;
+		}
+		catch (Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e);
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int CalculateLayoutInputVertical(IntPtr L)
+	{
+		try
+		{
+			ToLua.CheckArgsCount(L, 1);
+			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)ToLua.CheckObject<TMPro.TMP_InputField>(L, 1);
+			obj.CalculateLayoutInputVertical();
 			return 0;
 		}
 		catch (Exception e)
@@ -520,6 +614,25 @@ public class TMPro_TMP_InputFieldWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index shouldHideMobileInput on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_shouldHideSoftKeyboard(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)o;
+			bool ret = obj.shouldHideSoftKeyboard;
+			LuaDLL.lua_pushboolean(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index shouldHideSoftKeyboard on a nil value");
 		}
 	}
 
@@ -885,6 +998,25 @@ public class TMPro_TMP_InputFieldWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_onTouchScreenKeyboardStatusChanged(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)o;
+			TMPro.TMP_InputField.TouchScreenKeyboardEvent ret = obj.onTouchScreenKeyboardStatusChanged;
+			ToLua.PushObject(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index onTouchScreenKeyboardStatusChanged on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int get_onValidateInput(IntPtr L)
 	{
 		object o = null;
@@ -1071,6 +1203,25 @@ public class TMPro_TMP_InputFieldWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index lineType on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_lineLimit(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)o;
+			int ret = obj.lineLimit;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index lineLimit on a nil value");
 		}
 	}
 
@@ -1360,6 +1511,139 @@ public class TMPro_TMP_InputFieldWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_minWidth(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)o;
+			float ret = obj.minWidth;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index minWidth on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_preferredWidth(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)o;
+			float ret = obj.preferredWidth;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index preferredWidth on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_flexibleWidth(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)o;
+			float ret = obj.flexibleWidth;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index flexibleWidth on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_minHeight(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)o;
+			float ret = obj.minHeight;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index minHeight on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_preferredHeight(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)o;
+			float ret = obj.preferredHeight;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index preferredHeight on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_flexibleHeight(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)o;
+			float ret = obj.flexibleHeight;
+			LuaDLL.lua_pushnumber(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index flexibleHeight on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_layoutPriority(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)o;
+			int ret = obj.layoutPriority;
+			LuaDLL.lua_pushinteger(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index layoutPriority on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_shouldHideMobileInput(IntPtr L)
 	{
 		object o = null;
@@ -1375,6 +1659,25 @@ public class TMPro_TMP_InputFieldWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index shouldHideMobileInput on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_shouldHideSoftKeyboard(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)o;
+			bool arg0 = LuaDLL.luaL_checkboolean(L, 2);
+			obj.shouldHideSoftKeyboard = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index shouldHideSoftKeyboard on a nil value");
 		}
 	}
 
@@ -1721,6 +2024,25 @@ public class TMPro_TMP_InputFieldWrap
 	}
 
 	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_onTouchScreenKeyboardStatusChanged(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)o;
+			TMPro.TMP_InputField.TouchScreenKeyboardEvent arg0 = (TMPro.TMP_InputField.TouchScreenKeyboardEvent)ToLua.CheckObject<TMPro.TMP_InputField.TouchScreenKeyboardEvent>(L, 2);
+			obj.onTouchScreenKeyboardStatusChanged = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index onTouchScreenKeyboardStatusChanged on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
 	static int set_onValidateInput(IntPtr L)
 	{
 		object o = null;
@@ -1907,6 +2229,25 @@ public class TMPro_TMP_InputFieldWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index lineType on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int set_lineLimit(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			TMPro.TMP_InputField obj = (TMPro.TMP_InputField)o;
+			int arg0 = (int)LuaDLL.luaL_checknumber(L, 2);
+			obj.lineLimit = arg0;
+			return 0;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index lineLimit on a nil value");
 		}
 	}
 
