@@ -19,6 +19,7 @@ namespace Framework
         private Transform m_MapCanvas;                      //Map UI 跟对象
         private Transform m_GuideCanvas;                    //引导UI根对象
         private Material m_GreyMaterial;                    //灰度材质
+        private Transform m_NetWorkManager;                   //全屏UI或者弹出UI根对象
 
         /// <summary>
         /// 灰色材质
@@ -29,6 +30,22 @@ namespace Framework
             {
                 if (null == m_GreyMaterial) m_GreyMaterial = Resources.Load<Material>("Material/Grey");
                 return m_GreyMaterial;
+            }
+        }
+
+        /// <summary>
+        /// NetWorkManager根对象
+        /// </summary>
+        public Transform NetWorkManagerTag
+        {
+            get
+            {
+                if (m_NetWorkManager == null)
+                {
+                    GameObject gameObj = GameObject.FindWithTag("NetWorkManager");
+                    if (gameObj != null) m_NetWorkManager = gameObj.transform;
+                }
+                return m_NetWorkManager;
             }
         }
 

@@ -18,6 +18,7 @@ public class Framework_UIManagerWrap
 		L.RegFunction("__eq", op_Equality);
 		L.RegFunction("__tostring", ToLua.op_ToString);
 		L.RegVar("Grey", get_Grey, null);
+		L.RegVar("NetWorkManagerTag", get_NetWorkManagerTag, null);
 		L.RegVar("NormalCanvas", get_NormalCanvas, null);
 		L.RegVar("MapCanvas", get_MapCanvas, null);
 		L.RegVar("GuideCanvas", get_GuideCanvas, null);
@@ -235,6 +236,25 @@ public class Framework_UIManagerWrap
 		catch(Exception e)
 		{
 			return LuaDLL.toluaL_exception(L, e, o, "attempt to index Grey on a nil value");
+		}
+	}
+
+	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
+	static int get_NetWorkManagerTag(IntPtr L)
+	{
+		object o = null;
+
+		try
+		{
+			o = ToLua.ToObject(L, 1);
+			Framework.UIManager obj = (Framework.UIManager)o;
+			UnityEngine.Transform ret = obj.NetWorkManagerTag;
+			ToLua.Push(L, ret);
+			return 1;
+		}
+		catch(Exception e)
+		{
+			return LuaDLL.toluaL_exception(L, e, o, "attempt to index NetWorkManagerTag on a nil value");
 		}
 	}
 

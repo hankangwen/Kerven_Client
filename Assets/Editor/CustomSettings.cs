@@ -198,6 +198,7 @@ public static class CustomSettings
         _GT(typeof(View)),
         _GT(typeof(LuaListItem)),
         _GT(typeof(LuaBehaviour)),
+        _GT(typeof(NetWorkManager)),
         _GT(typeof(WorldMapView)),
         _GT(typeof(Guide)),
 

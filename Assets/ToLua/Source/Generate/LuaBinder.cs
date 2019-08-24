@@ -15,6 +15,7 @@ public static class LuaBinder
 		GameConstWrap.Register(L);
 		LuaListItemWrap.Register(L);
 		LuaBehaviourWrap.Register(L);
+		NetWorkManagerWrap.Register(L);
 		GuideWrap.Register(L);
 		L.BeginModule("LuaInterface");
 		LuaInterface_LuaInjectionStationWrap.Register(L);

@@ -19,6 +19,8 @@ ViewList =
 	LoginView = require 'View/Login/LoginView',								--登录界面
 	ChooseRoleView = require 'View/ChooseRole/ChooseRoleView',				--选择角色界面
 	ChooseSvrView = require 'View/ChooseSvr/ChooseSvrView',					--选择服务器界面
+	StartView = require 'View/Start/StartView',								--开始界面
+	ChatMainView = require 'View/Chat/ChatMainView',						--聊天界面
 	
 	MsgTips = require 'View/MsgBox/MsgTips',								--显示弹出Tips
 	MsgBox = require 'View/MsgBox/MsgBox',									--弹出确认框

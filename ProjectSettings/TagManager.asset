@@ -12,6 +12,7 @@ TagManager:
   - MapCanvas
   - GuideCanvas
   - NormalCanvas
+  - NetWorkManager
   layers:
   - Default
   - TransparentFX

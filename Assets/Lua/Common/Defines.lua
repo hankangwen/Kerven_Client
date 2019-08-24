@@ -18,6 +18,7 @@ NormalCanvas = UIManager.NormalCanvas;						--界面显示画布
 MapCanvas = UIManager.MapCanvas;							--世界地图画布
 TipsCanvas = TipsManager.TipsCanvas;						--提示界面画布
 GuideCanvas = UIManager.GuideCanvas;						--引导界面画布
+NetWorkManagerTag = UIManager.NetWorkManagerTag;			--NetWorkManagerTag
 
 ------------------------------------第三方 比如DoTween---------------------------------------------------
 DOTween = DG.Tweening.DOTween;
