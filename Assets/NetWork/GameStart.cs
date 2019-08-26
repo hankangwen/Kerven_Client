@@ -11,6 +11,7 @@ using UnityEngine;
 
 public class GameStart : MonoBehaviour {
     PENet.PESocket<ClientSession, NetMsg> skt = null;
+    private bool isAppIsQuit = false;
 
     private void Awake()
     {
@@ -22,6 +23,7 @@ public class GameStart : MonoBehaviour {
         skt.StartAsClient(IPCfg.srvIP, IPCfg.srvPort);
 
         skt.SetLog(true, (string msg, int lv) => {
+            if (isAppIsQuit) return;
             switch (lv) {
                 case 0:
                     msg = "Log:" + msg;
@@ -48,5 +50,12 @@ public class GameStart : MonoBehaviour {
         {
             text = msg
         });
+    }
+
+    private void OnApplicationQuit(){
+        isAppIsQuit = true;
+        if (skt != null){
+            skt.Close();
+        }
     }
 }
