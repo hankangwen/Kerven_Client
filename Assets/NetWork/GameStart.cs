@@ -48,8 +48,9 @@ public class GameStart : MonoBehaviour {
     public void SendMsg(string msg) {
         skt.session.SendMsg(new NetMsg
         {
+            msgType = MsgType.BroadcastAll,
             text = msg
-        });
+        }) ;
     }
 
     private void OnApplicationQuit(){
