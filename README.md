@@ -1,11 +1,9 @@
 # SpriteMVC
-QQ群1：685243575
 
-本框架工程基于Unity 2018.3.5 + UGUI + tolua构建
+本框架工程基于Unity + UGUI + tolua构建
 
-作为国内最早一批ulua和SimpleFrameWork的使用者与追随者，由衷感谢ulua/tolua以及LuaFramework的创建者与开发者为国产游戏热更新方案作出的贡献，同时对slua与xlua的作者表示真诚的感谢！（都是牛人，没有引战的意思）。
-
-在使用LuaFramework的过程当中，为了项目的便利自己不断的修改整合，使用PureMVC的思维，用lua实现一套类似的逻辑，用于lua部分代码mvc的实现是修改的初衷，这便是框架的由来过程；C#大部分代码与逻辑仍沿用LuaFramework比如Assetbundle的下载以及加载，只有lua部分完全使用PureMVC方式另外实现，自己只能算是tolua、LuaFramework、PureMVC的整合搬运工。
+在使用LuaFramework的过程当中，为了项目的便利自己不断的修改整合，使用PureMVC的思维，用lua实现一套类似的逻辑，用于lua部分代码mvc的实现是修改的初衷。
+这便是框架的由来过程；C#大部分代码与逻辑仍沿用LuaFramework比如Assetbundle的下载以及加载，只有lua部分完全使用PureMVC方式另外实现，自己只能算是tolua、LuaFramework、PureMVC的整合搬运工。
 
 网络协议数据序列化与反序列化部分直接使用的Json，其他Protobuf或二进制流方式可以参照tolua重新实现。
 
@@ -23,9 +21,6 @@ xlsx2lua工具地址：https://github.com/zerospace007/xls2lua-python
 
 关于AssetBundle打包工具，这里推荐:
 https://github.com/Unity-Technologies/AssetBundles-Browser
-
-最后在这里极力向大家推荐LuaPerfect编辑调试工具，由腾讯某技术组免费提供，支持断点调试，良心产品，友好支持ulua/tolua，slua，xlua。
-LuaPerfect官方群：932801740
 
 ##展示mvc核心代码，使用观察者模式，实现lua模块消息的发布-订阅
 ```lua
