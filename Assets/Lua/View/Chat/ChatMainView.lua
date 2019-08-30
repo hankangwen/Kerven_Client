@@ -53,7 +53,7 @@ end
 local Switch = 
 {
 	SendBtn = function()
-        netWork:SendMsgWithClientName(msgText.text, clientName.text)
+        netWork:SendMsg(msgText.text, clientName.text, 0)
 	end,
 }
 

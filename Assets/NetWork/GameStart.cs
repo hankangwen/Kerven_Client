@@ -53,6 +53,27 @@ public class GameStart : MonoBehaviour {
         }) ;
     }
 
+    public void SendMsgWithMsgType(string msg, int type){
+        skt.session.SendMsg(new NetMsg
+        {
+            msgType = HandleMsgType(type),
+            text = msg
+        }) ;
+    }
+
+    private MsgType HandleMsgType(int type){
+        switch (type) {
+            case 0:
+                return MsgType.BroadcastAll;
+            case 1:
+                return MsgType.BroadcastAllWithCurClient;
+            case 2:
+                return MsgType.Store;
+            default:
+                return MsgType.Default;
+        }
+    }
+
     private void OnApplicationQuit(){
         isAppIsQuit = true;
         if (skt != null){

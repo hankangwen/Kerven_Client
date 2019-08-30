@@ -8,7 +8,6 @@ public class NetWorkManagerWrap
 	{
 		L.BeginClass(typeof(NetWorkManager), typeof(UnityEngine.MonoBehaviour));
 		L.RegFunction("SendMsg", SendMsg);
-		L.RegFunction("SendMsgWithClientName", SendMsgWithClientName);
 		L.RegFunction("CheckHasMsg", CheckHasMsg);
 		L.RegFunction("GetAndRemoveMsg", GetAndRemoveMsg);
 		L.RegFunction("__eq", op_Equality);
@@ -21,29 +20,44 @@ public class NetWorkManagerWrap
 	{
 		try
 		{
-			ToLua.CheckArgsCount(L, 2);
-			NetWorkManager obj = (NetWorkManager)ToLua.CheckObject<NetWorkManager>(L, 1);
-			string arg0 = ToLua.CheckString(L, 2);
-			obj.SendMsg(arg0);
-			return 0;
-		}
-		catch (Exception e)
-		{
-			return LuaDLL.toluaL_exception(L, e);
-		}
-	}
+			int count = LuaDLL.lua_gettop(L);
 
-	[MonoPInvokeCallbackAttribute(typeof(LuaCSFunction))]
-	static int SendMsgWithClientName(IntPtr L)
-	{
-		try
-		{
-			ToLua.CheckArgsCount(L, 3);
-			NetWorkManager obj = (NetWorkManager)ToLua.CheckObject<NetWorkManager>(L, 1);
-			string arg0 = ToLua.CheckString(L, 2);
-			string arg1 = ToLua.CheckString(L, 3);
-			obj.SendMsgWithClientName(arg0, arg1);
-			return 0;
+			if (count == 2)
+			{
+				NetWorkManager obj = (NetWorkManager)ToLua.CheckObject<NetWorkManager>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				obj.SendMsg(arg0);
+				return 0;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes<int>(L, 3))
+			{
+				NetWorkManager obj = (NetWorkManager)ToLua.CheckObject<NetWorkManager>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				int arg1 = (int)LuaDLL.lua_tonumber(L, 3);
+				obj.SendMsg(arg0, arg1);
+				return 0;
+			}
+			else if (count == 3 && TypeChecker.CheckTypes<string>(L, 3))
+			{
+				NetWorkManager obj = (NetWorkManager)ToLua.CheckObject<NetWorkManager>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				string arg1 = ToLua.ToString(L, 3);
+				obj.SendMsg(arg0, arg1);
+				return 0;
+			}
+			else if (count == 4)
+			{
+				NetWorkManager obj = (NetWorkManager)ToLua.CheckObject<NetWorkManager>(L, 1);
+				string arg0 = ToLua.CheckString(L, 2);
+				string arg1 = ToLua.CheckString(L, 3);
+				int arg2 = (int)LuaDLL.luaL_checknumber(L, 4);
+				obj.SendMsg(arg0, arg1, arg2);
+				return 0;
+			}
+			else
+			{
+				return LuaDLL.luaL_throw(L, "invalid arguments to method: NetWorkManager.SendMsg");
+			}
 		}
 		catch (Exception e)
 		{

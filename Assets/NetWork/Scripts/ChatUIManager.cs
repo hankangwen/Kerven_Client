@@ -19,6 +19,6 @@ public class ChatUIManager : MonoBehaviour
 
     private void SendBtnClick()
     {
-        netWorkManager.SendMsgWithClientName(inputMsg.text, inputName.text);
+        // netWorkManager.SendMsgWithClientName(inputMsg.text, inputName.text);
     }
 }

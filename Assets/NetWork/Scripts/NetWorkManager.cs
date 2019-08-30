@@ -17,10 +17,21 @@ public class NetWorkManager : MonoBehaviour
         gameStart.SendMsg(msg);
     }
 
-    public void SendMsgWithClientName(string msg, string name)
+    public void SendMsg(string msg, int type)
+    {
+        gameStart.SendMsgWithMsgType(msg, type);
+    }
+
+    public void SendMsg(string msg, string name)
     {
         string newMsg = name + ":" + msg;
         gameStart.SendMsg(newMsg);
+    }
+
+    public void SendMsg(string msg, string name, int type)
+    {
+        string newMsg = name + ":" + msg;
+        gameStart.SendMsgWithMsgType(newMsg, type);
     }
 
     public bool CheckHasMsg(){
